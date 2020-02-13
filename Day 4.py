@@ -26,7 +26,21 @@ def checkDigitsOnlyIncrease(num):
 def findAdjacentDouble(num):
     for i in range(0, len(num)-1):
         if(num[i] == num[i+1]):
-            return True
+            #extra check for puzzle 2
+            if(numOfDigitsInPassword(num, num[i]) > 2):
+                pass #continue looking for an adjacent pair
+            else:
+                return True
     return False
+
+#returns how many of the given number there is in the password
+def numOfDigitsInPassword(password, num):
+    total = 0
+    
+    for digit in password:
+        if(digit == num):
+            total += 1
+            
+    return total
 
 print(len(findNumPasswords(128392, 643281)))
