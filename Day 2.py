@@ -10,25 +10,24 @@ def getIntsList():
 def intCode(ints):
     for i in range(0, len(ints), 4):
         n = ints[i]
+        #opcode 1 - add the two next digits and store in position given
         if(n == 1):
             a = ints[ints[i+1]]
             b = ints[ints[i+2]]
             ints[ints[i+3]] = a + b
+        #opcode 2 - multiply the two next digits and store in position given
         elif(n == 2):
             a = ints[ints[i+1]]
             b = ints[ints[i+2]]
             ints[ints[i+3]] = a * b
+        #opcode 99 - stop the program
         elif (n==99):
             break
+        
+    #return the diagnostic code at position 0 in list
     return ints[0]
 
-ints = getIntsList()
-ints[1] = 12
-ints[2] = 2
-print(intCode(ints))
-
 #part two
-
 def findNounAndVerb(noun=50, verb=0):
     #reset ints list
     ints = getIntsList()
@@ -58,6 +57,11 @@ def findNounAndVerb(noun=50, verb=0):
         print("oops")
         return
 
+#main routine
+ints = getIntsList()
+ints[1] = 12
+ints[2] = 2
+print(intCode(ints))
 print(findNounAndVerb())
 
 

@@ -1,12 +1,14 @@
-# Day 1 - 2/12/19
+# Day 1
 
 import math
 
 #part one
+#calculate fuel needed for mass of ship
 ##def calculateFuel(mass):
 ##    return math.floor(int(mass)/3) - 2
 
 #part two
+#calculate fuel needed for mass of ship + extra mass of fuel
 def calculateFuel(mass):
     fuel_mass = math.floor(int(mass)/3) - 2
     if(fuel_mass > 0):
@@ -14,6 +16,7 @@ def calculateFuel(mass):
     else:
         return 0
 
+#main routine
 total = 0
 
 f = open("puzzle_input/day1.txt", "r")
