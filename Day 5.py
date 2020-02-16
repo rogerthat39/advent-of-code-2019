@@ -1,6 +1,5 @@
 #Day 5 - based on day 2 "Intcode" computer
 
-#part one
 def getIntsList():
     f = open("puzzle_input/day5.txt", "r")
     ints = [int(x.strip()) for x in f.readline().split(',')]
@@ -24,24 +23,54 @@ def intCode(ints):
             a = getValue(i+1, modes[0])
             b = getValue(i+2, modes[1])
             ints[ints[i+3]] = a + b
-            i += 4 #this instruction is 4 chars long
+            i += 4 #go to next instruction
             
         #opcode 2 - multiply two digits and store in position given
         elif(n == 2):
             a = getValue(i+1, modes[0])
             b = getValue(i+2, modes[1])
             ints[ints[i+3]] = a * b
-            i += 4 #this instruction is 4 chars long
+            i += 4 #go to next instruction
             
         #opcode 3 - store input from user in position given
         elif(n == 3):
             ints[ints[i+1]] = int(input("Enter an input: "))
-            i += 2 #this instruction is 2 chars long
+            i += 2 #go to next instruction - this instruction is 2 chars long
             
         #opcode 4 - output the digit in the position given
         elif(n == 4):
-            print(ints[ints[i+1]])
-            i += 2 #this instruction is 2 chars long
+            print(getValue(i+1, modes[0]))
+            i += 2 #go to next instruction - this instruction is 2 chars long
+
+        #opcode 5 - jump to given place in program if True
+        elif(n == 5):
+            if(getValue(i+1, modes[0]) != 0):
+                i = getValue(i+2, modes[1]) #set pointer to second parameter
+            else:
+                i += 3 #go to the next instruction as normal
+
+        #opcode 6 - jump to given place in program if False
+        elif(n == 6):
+            if(getValue(i+1, modes[0]) == 0):
+                i = getValue(i+2, modes[1]) #set pointer to second parameter
+            else:
+                i += 3 #go to the next instruction as normal
+
+        #opcode 7 - store '1' in position given if first param less than second
+        elif(n == 7):
+            if(getValue(i+1, modes[0]) < getValue(i+2, modes[1])):
+                ints[ints[i+3]] = 1
+            else:
+                ints[ints[i+3]] = 0
+            i += 4 #go to next instruction (this instruction is 3 chars long)
+
+        #opcode 8 - store '1' in position given if first and second params match
+        elif (n == 8):
+            if(getValue(i+1, modes[0]) == getValue(i+2, modes[1])):
+                ints[ints[i+3]] = 1
+            else:
+                ints[ints[i+3]] = 0
+            i += 4 #go to next instruction (this instruction is 3 chars long)
         
     #return the diagnostic code at position 0 in list
     print("Halting...")
@@ -74,6 +103,4 @@ def getValue(location, mode):
 #main routine
 ints = getIntsList()
 intCode(ints)
-
-
 
